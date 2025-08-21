@@ -26,8 +26,8 @@
     --gradient-end-dark: #34495e;
 
     /* Shared */
-    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    --border-radius: 12px;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --border-radius: 16px;
 }
 
 [data-theme="dark"] {
@@ -70,6 +70,7 @@ html, body {
     color: var(--text-color);
     line-height: 1.6;
     transition: background-color 0.3s, color 0.3s;
+    -webkit-tap-highlight-color: transparent;
 }
 
 #app-container {
@@ -148,11 +149,15 @@ html, body {
 .onboarding-content {
     text-align: center;
     background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    animation: fadeIn 1s ease-out;
 }
 .onboarding-content img {
-    max-width: 200px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
     margin-bottom: 1rem;
     border-radius: 50%;
+    border: 4px solid var(--surface-color);
 }
 .onboarding-content h1 {
     color: var(--primary-color);
@@ -170,11 +175,19 @@ input, select, textarea, button {
     padding: 12px;
     margin-bottom: 1rem;
     border-radius: 8px;
-    border: 1px solid var(--text-secondary-color);
+    border: 1px solid var(--text-secondary-color-light);
     background-color: var(--background-color);
     color: var(--text-color);
     font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px var(--secondary-color-light);
+}
+
 button {
     background-color: var(--secondary-color);
     color: white;
@@ -189,6 +202,11 @@ button:hover {
 button:active {
     transform: scale(0.98);
 }
+button:disabled {
+    background-color: var(--text-secondary-color);
+    cursor: not-allowed;
+}
+
 
 /* MAIN CONTENT */
 #main-content.hidden, .hidden {
@@ -198,7 +216,6 @@ button:active {
 #app-header {
     padding: 1rem 1.5rem;
     background: var(--surface-color);
-    border-bottom: 1px solid var(--background-color);
 }
 
 #greeting {
@@ -230,6 +247,8 @@ button:active {
     align-items: center;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
     z-index: 100;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 .nav-btn {
     background: none;
@@ -240,12 +259,19 @@ button:active {
     align-items: center;
     padding: 0;
     width: 20%;
+    font-size: 0.7rem;
+    transition: color 0.3s;
 }
 .nav-btn.active {
     color: var(--secondary-color);
+    transform: scale(1.1);
 }
 .nav-btn svg {
     margin-bottom: 4px;
+    transition: transform 0.3s;
+}
+.nav-btn.active svg {
+     transform: translateY(-2px);
 }
 .nav-fab {
     position: absolute;
@@ -262,15 +288,24 @@ button:active {
     align-items: center;
     box-shadow: var(--shadow);
     border: 3px solid var(--surface-color);
+    transition: transform 0.2s;
+}
+.nav-fab:active {
+    transform: translateX(-50%) scale(0.95);
 }
 
 /* Card Styles */
 .card {
     background-color: var(--surface-color);
     border-radius: var(--border-radius);
-    padding: 1rem;
+    padding: 1.2rem;
     margin-bottom: 1rem;
     box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 .card-header {
     display: flex;
@@ -326,6 +361,7 @@ button:active {
     align-items: center;
     margin-right: 1rem;
     color: white;
+    font-weight: bold;
 }
 .transaction-icon.income { background-color: var(--accent-green); }
 .transaction-icon.expense { background-color: var(--accent-red); }
@@ -363,11 +399,20 @@ button:active {
     background: var(--surface-color);
     border-radius: var(--border-radius);
     margin-bottom: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 .language-selector button {
     width: auto;
     padding: 8px 16px;
     margin-left: 8px;
+    background: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-secondary-color);
+}
+.language-selector button.active {
+    background: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
 }
 
 /* TOGGLE SWITCH */
@@ -406,29 +451,77 @@ input:checked + .slider:before { transform: translateX(26px); }
     overflow: hidden;
 }
 .wizard-progress {
-    width: 20%;
+    width: 0%;
     height: 100%;
     background-color: var(--secondary-color);
     transition: width 0.4s ease;
 }
 .wizard-step { display: none; }
 .wizard-step.active { display: block; animation: fadeIn 0.5s; }
+.wizard-step h3 {
+    margin-bottom: 1rem;
+}
+.wizard-step p {
+    color: var(--text-secondary-color);
+    margin-bottom: 1.5rem;
+}
 .wizard-navigation {
     display: flex;
     justify-content: space-between;
     margin-top: 2rem;
+    gap: 1rem;
 }
 #investment-wizard-modal .modal-content {
     width: 95%;
     max-width: 550px;
 }
-
 .result-display {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: var(--secondary-color);
     margin-top: 1rem;
     padding: 1rem;
     background: var(--background-color);
     border-radius: var(--border-radius);
+    text-align: left;
+}
+.list-item {
+    background: var(--background-color);
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    text-align: left;
+}
+
+#alert-modal .modal-content {
+    text-align: center;
+}
+#alert-ok-btn {
+    width: 100px;
+    margin: 1rem auto 0;
+}
+.report-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    text-align: left;
+    margin-bottom: 2rem;
+}
+.summary-item {
+    background: var(--surface-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+.summary-item h4 {
+    color: var(--text-secondary-color);
+}
+.summary-item p {
+    font-size: 1.5rem;
+    font-weight: bold;
 }

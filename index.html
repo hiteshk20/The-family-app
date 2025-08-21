@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>परिवार बजट और निवेश</title>
+    <title data-i18n="appTitle">परिवार बजट और निवेश</title>
     <link rel="stylesheet" href="index.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,12 +24,12 @@
         <div id="onboarding-modal" class="modal-overlay hidden">
             <div class="modal-content onboarding-content">
                 <div class="illustration">
-                    <img src="https://img.freepik.com/free-vector/indian-family-illustration_52683-77987.jpg?t=st=1716920251~exp=1716923851~hmac=62174c35e8061e5f8f376fd49581009187d9a1ed42a632fa5a72097e3a241773&w=1060" alt="Family Illustration">
+                    <img src="https://i.ibb.co/68v0K9N/family-illustration.png" alt="Family Illustration">
                 </div>
                 <h1 data-i18n="welcomeTitle">परिवार बजट ऐप में आपका स्वागत है</h1>
-                <p data-i18n="welcomeMessage">कृपया अपना नाम दर्ज करें।</p>
+                <p data-i18n="welcomeMessage">शुरू करने के लिए कृपया अपना नाम दर्ज करें।</p>
                 <form id="onboarding-form">
-                    <input type="text" id="name-input" placeholder="आपका नाम" required>
+                    <input type="text" id="name-input" placeholder="आपका नाम" required aria-label="Your Name">
                     <button type="submit" data-i18n="continue">आगे बढ़ें</button>
                 </form>
             </div>
@@ -44,6 +44,7 @@
             <!-- Pages -->
             <div id="page-dashboard" class="page active"></div>
             <div id="page-transactions" class="page"></div>
+            <div id="page-reports" class="page"></div>
             <div id="page-settings" class="page"></div>
         </main>
 
@@ -61,7 +62,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
             </button>
             <button class="nav-btn" data-page="investments" aria-label="Investments">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-12h2v4h-2zm0 6h2v2h-2z"/></svg>
+                 <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><g><rect fill="none" height="24" width="24"/></g><g><g><path d="M19.35,10.04C18.67,6.59,15.64,4,12,4C9.11,4,6.6,5.64,5.35,8.04C2.34,8.36,0,10.91,0,14c0,3.31,2.69,6,6,6h13 c2.76,0,5-2.24,5-5C24,12.36,21.95,10.22,19.35,10.04z M17,13l-5,5l-5-5h3V9h4v4H17z"/></g></g></svg>
                 <span data-i18n="navInvest">निवेश</span>
             </button>
             <button class="nav-btn" data-page="settings" aria-label="Settings">
@@ -83,10 +84,10 @@
                         </label>
                         <span id="transaction-type-label" data-i18n="expense">खर्च</span>
                     </div>
-                    <input type="number" id="transaction-amount" placeholder="रकम" required>
-                    <select id="transaction-category" required></select>
-                    <input type="date" id="transaction-date" required>
-                    <textarea id="transaction-notes" placeholder="नोट्स (वैकल्पिक)"></textarea>
+                    <input type="number" id="transaction-amount" data-i18n-placeholder="amount" placeholder="रकम" required>
+                    <select id="transaction-category" required aria-label="Category"></select>
+                    <input type="date" id="transaction-date" required aria-label="Date">
+                    <textarea id="transaction-notes" data-i18n-placeholder="notes" placeholder="नोट्स (वैकल्पिक)"></textarea>
                     <button type="submit" id="save-transaction-btn" data-i18n="save">सहेजें</button>
                 </form>
             </div>
@@ -96,7 +97,14 @@
         <div id="investment-wizard-modal" class="modal-overlay hidden">
             <!-- Content will be injected by JS -->
         </div>
-
+        
+        <!-- Generic Alert Modal -->
+        <div id="alert-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                 <p id="alert-message"></p>
+                 <button id="alert-ok-btn">OK</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>
